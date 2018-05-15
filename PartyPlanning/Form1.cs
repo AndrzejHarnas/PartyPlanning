@@ -19,7 +19,7 @@ namespace PartyPlanning
         {
             InitializeComponent();
 
-            party = new DinnerParty() { NumberOfPeople = (int)NumberPeopleNumericUpDown.Value};
+            party = new DinnerParty((int)NumberPeopleNumericUpDown.Value,FantazyDecorationCheckBox.Checked,HealthyOptionCheckBox.Checked);
            
             DisplayChanged();
            
@@ -33,19 +33,20 @@ namespace PartyPlanning
 
         private void DisplayChanged()
         {
-            party.SetHealthyOption(HealthyOptionCheckBox.Checked);
-            party.CalculateCostOfDecorations(FantazyDecorationCheckBox.Checked);
-            CostTextBox.Text = "" + party.CalculateCost(HealthyOptionCheckBox.Checked);
+            decimal Cost = party.Cost;
+            CostTextBox.Text = Cost.ToString();
 
         }
 
         private void FantazyDecorationCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            party.FancyDecoration = FantazyDecorationCheckBox.Checked;
             DisplayChanged();
         }
 
         private void HealthyOptionCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            party.HealtyOption = HealthyOptionCheckBox.Checked;
             DisplayChanged();
         }
     }
